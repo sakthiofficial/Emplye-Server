@@ -9,8 +9,8 @@ app.use(cors())
 app.use(express.json())
 export let client = new MongoClient("mongodb://127.0.0.1")
 await client.connect;
-app.get("/", async (req, res) => {
-    let data = await client.db("sakthi").collection("employee").find().toArray();
+app.get("/:name", async (req, res) => {
+    let data = await client.db(req.params.name).collection("employee").find().toArray();
     if (data) {
         res.status(200).send(data)
     } else {
@@ -21,23 +21,23 @@ app.get("/", async (req, res) => {
 app.use("/employee", employeeRouter)
 app.use("/attendence/public", attendenceRouter)
 // attendence api calls.
-app.post("/attendence", async (req, res) => {
-    try {
-        let result = await client.db("sakthi").collection(req.body.year).insertOne(req.body);
-        res.status(200).send(result)
-    } catch (err) {
-        res.status(404).send({ msg: "Something Wrong" })
-    }
-})
-app.put("/attendence/month/list", async (req, res) => {
-    let data = await client.db("sakthi").collection(req.body.year).find({ month: req.body.month }).toArray();
-    try {
-        res.status(200).send(data)
-    } catch (err) {
-        res.status(404).send({ msg: "Something Wrong" })
+// app.post("/attendence", async (req, res) => {
+//     try {
+//         let result = await client.db("").collection(req.body.year).insertOne(req.body);
+//         res.status(200).send(result)
+//     } catch (err) {
+//         res.status(404).send({ msg: "Something Wrong" })
+//     }
+// })
+// app.put("/attendence/month/list", async (req, res) => {
+//     let data = await client.db("").collection(req.body.year).find({ month: req.body.month }).toArray();
+//     try {
+//         res.status(200).send(data)
+//     } catch (err) {
+//         res.status(404).send({ msg: "Something Wrong" })
 
-    }
-})
+//     }
+// })
 app.post("/user/signup", async (req, res) => {
     let data = req.body;
     let user = await client.db("employeeusers").collection("users").findOne({ name: data.name })

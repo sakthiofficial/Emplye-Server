@@ -4,23 +4,23 @@ import mongodb, { MongoClient, ObjectId } from "mongodb";
 
 
 let employeeRouter = express.Router()
-employeeRouter.post("/add", async (req, res) => {
-    let test = await client.db("sakthi").collection("employee").findOne({ name: req.body.name });
+employeeRouter.post("/add/:name", async (req, res) => {
+    let test = await client.db(req.params.name).collection("employee").findOne({ name: req.body.name });
 
 
-    await client.db("sakthi").collection("employee").insertOne(req.body)
+    await client.db(req.params.name).collection("employee").insertOne(req.body)
     res.status(200).send({ msg: "SuccessFully Employee Added" })
 
 })
-employeeRouter.put("/edit", async (req, res) => {
+employeeRouter.put("/edit/:name", async (req, res) => {
     console.log(req.url);
 
-    let data = await client.db("sakthi").collection("employee").updateOne({ _id: new ObjectId(req.body.id) }, { "$set": req.body })
+    let data = await client.db(req.params.name).collection("employee").updateOne({ _id: new ObjectId(req.body.id) }, { "$set": req.body })
     res.status(200).send(data);
 })
-employeeRouter.delete("/delete/:id", async (req, res) => {
+employeeRouter.delete("/delete/:id/:name", async (req, res) => {
     console.log(req.params.id);
-    let result = await client.db("sakthi").collection("employee").deleteOne({ _id: new ObjectId(req.params.id) })
+    let result = await client.db(req.params.name).collection("employee").deleteOne({ _id: new ObjectId(req.params.id) })
     if (result.deletedCount == 1) {
         res.status(200).send({ msg: "Succesfully Deleted" })
     } else {
