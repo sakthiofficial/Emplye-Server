@@ -4,10 +4,14 @@ import cors from "cors";
 import employeeRouter from "./routers/employee_router.js";
 import attendenceRouter from "./routers/atendentence_date.js";
 import { comparePassword, gentratePassword } from "./assets/hashing_pass.js";
-let app = express()
+import * as dotenv from 'dotenv';
+dotenv.config()
+
+let app = express();
+let port = process.env.port
 app.use(cors())
 app.use(express.json())
-export let client = new MongoClient("mongodb://127.0.0.1")
+export let client = new MongoClient(process.env.url)
 await client.connect;
 app.get("/:name", async (req, res) => {
     let data = await client.db(req.params.name).collection("employee").find().toArray();
@@ -66,6 +70,6 @@ app.post("/user/login", async (req, res) => {
         }
     }
 })
-app.listen(4000, () => {
-    console.log("Server is running on 4000 port");
+app.listen(port, () => {
+    console.log("Server is running on" + port + "port");
 })
