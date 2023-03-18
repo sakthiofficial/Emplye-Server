@@ -25,23 +25,23 @@ app.get("/:name", async (req, res) => {
 app.use("/employee", employeeRouter)
 app.use("/attendence/public", attendenceRouter)
 // attendence api calls.
-// app.post("/attendence", async (req, res) => {
-//     try {
-//         let result = await client.db("").collection(req.body.year).insertOne(req.body);
-//         res.status(200).send(result)
-//     } catch (err) {
-//         res.status(404).send({ msg: "Something Wrong" })
-//     }
-// })
-// app.put("/attendence/month/list", async (req, res) => {
-//     let data = await client.db("").collection(req.body.year).find({ month: req.body.month }).toArray();
-//     try {
-//         res.status(200).send(data)
-//     } catch (err) {
-//         res.status(404).send({ msg: "Something Wrong" })
+app.post("/attendence", async (req, res) => {
+    try {
+        let result = await client.db("").collection(req.body.year).insertOne(req.body);
+        res.status(200).send(result)
+    } catch (err) {
+        res.status(404).send({ msg: "Something Wrong" })
+    }
+})
+app.put("/attendence/month/list", async (req, res) => {
+    let data = await client.db("").collection(req.body.year).find({ month: req.body.month }).toArray();
+    try {
+        res.status(200).send(data)
+    } catch (err) {
+        res.status(404).send({ msg: "Something Wrong" })
 
-//     }
-// })
+    }
+})
 app.post("/user/signup", async (req, res) => {
     let data = req.body;
     let user = await client.db("employeeusers").collection("users").findOne({ name: data.name })
