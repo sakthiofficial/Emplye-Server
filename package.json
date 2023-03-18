@@ -1,7 +1,6 @@
 {
   "name": "c",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -19,5 +18,14 @@
     "mongodb": "^5.1.0",
     "node": "^19.6.1",
     "nodemon": "^2.0.21"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sakthiofficial/Emplye-Server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sakthiofficial/Emplye-Server/issues"
+  },
+  "homepage": "https://github.com/sakthiofficial/Emplye-Server#readme",
+  "description": ""
 }
