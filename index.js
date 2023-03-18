@@ -8,10 +8,10 @@ import * as dotenv from 'dotenv';
 dotenv.config()
 
 let app = express();
-let port = 4000
+let port = process.env.PORT
 app.use(cors())
 app.use(express.json())
-let client = new MongoClient(process.env.url)
+let client = new MongoClient(process.env.URL)
 await client.connect;
 app.get("/:name", async (req, res) => {
     let data = await client.db(req.params.name).collection("employee").find().toArray();
