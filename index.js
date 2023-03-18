@@ -1,8 +1,8 @@
 import express from "express";
 import mongodb, { MongoClient } from "mongodb";
 import cors from "cors";
-// import employeeRouter from "./routers/employee_router.js";
-// import attendenceRouter from "./routers/atendentence_date.js";
+import employeeRouter from "./routers/employee_router.js";
+import attendenceRouter from "./routers/atendentence_date.js";
 import { comparePassword, gentratePassword } from "./assets/hashing_pass.js";
 import * as dotenv from 'dotenv';
 dotenv.config()
@@ -22,8 +22,8 @@ app.get("/:name", async (req, res) => {
 
     }
 })
-// app.use("/employee", employeeRouter)
-// app.use("/attendence/public", attendenceRouter)
+app.use("/employee", employeeRouter)
+app.use("/attendence/public", attendenceRouter)
 // attendence api calls.
 app.post("/attendence", async (req, res) => {
     try {
