@@ -8,10 +8,10 @@ import * as dotenv from 'dotenv';
 dotenv.config()
 
 let app = express();
-let port = process.env.port
+let port = 4000
 app.use(cors())
 app.use(express.json())
-export let client = new MongoClient(process.env.url)
+let client = new MongoClient(process.env.url)
 await client.connect;
 app.get("/:name", async (req, res) => {
     let data = await client.db(req.params.name).collection("employee").find().toArray();
@@ -22,8 +22,7 @@ app.get("/:name", async (req, res) => {
 
     }
 })
-app.use("/employee", employeeRouter)
-app.use("/attendence/public", attendenceRouter)
+
 // attendence api calls.
 app.post("/attendence", async (req, res) => {
     try {
@@ -70,6 +69,10 @@ app.post("/user/login", async (req, res) => {
         }
     }
 })
+app.use("/employee", employeeRouter)
+app.use("/attendence/public", attendenceRouter)
 app.listen(port, () => {
     console.log("Server is running on" + port + "port");
 })
+export { client }
+
