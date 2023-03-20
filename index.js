@@ -11,7 +11,7 @@ let app = express();
 let port = process.env.PORT
 app.use(cors())
 app.use(express.json())
-let client = new MongoClient(process.env.URL)
+let client = new MongoClient("mongodb+srv://sakthi:welcomeuser@cluster0.a6xrpmg.mongodb.net")
 await client.connect;
 app.get("/:name", async (req, res) => {
     let data = await client.db(req.params.name).collection("employee").find().toArray();
